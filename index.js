@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 
 const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
 const keys = require('./config/keys');
 
 const app = express();
@@ -17,17 +18,18 @@ mongoose.connect(keys.mongoURI, {useNewUrlParser: true}, () => {
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
-app.use('/auth', authRoutes);
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   keys: [keys.sessionKey]
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {user: req.user});
 });
 
 

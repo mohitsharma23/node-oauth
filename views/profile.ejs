@@ -19,9 +19,10 @@
       </ul>
     </nav>
     <header>
-      <h1>OAuth System</h1>
-      <h3>Homepage</h3>
+      <h1>Welcome <%= user.username %></h1>
     </header>
-
+    <main>
+      <img src="<%= user.photo %>" alt="Thumbnail">
+    </main>
   </body>
 </html>
